@@ -20,7 +20,7 @@ namespace Library.Controllers
         }
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult<Book>> GetBookwithId(GetBookwithid book)
+        public async Task<IActionResult> GetBookwithId(GetBookwithid book)
         {
             var book = await _context.Book.
         }
