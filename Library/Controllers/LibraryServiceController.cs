@@ -18,12 +18,15 @@ namespace Library.Controllers
         {
             return await _libraryService.GetBooksAsync();
         }
+
         [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> GetBookwithId(GetBookwithid book)
+        [Route("api/books/{id}")]
+        public async Task<IActionResult> GetBooksID(long id)
         {
-            var book = await _context.Book.
+            return await _libraryService.GetBookId(id);
         }
+
+
         [HttpPost]
         [Route("api/books")]
         public async Task<IActionResult> CreateBook(CreateBook createBook) 

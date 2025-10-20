@@ -7,5 +7,6 @@ namespace Library.Interfaces
     {
         Task<IActionResult> GetBooksAsync();
         Task<IActionResult> CreateBookAsync(CreateBook createBook);
+        Task<IActionResult> GetBookId(long id);
     }
 }
