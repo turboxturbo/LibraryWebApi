@@ -7,7 +7,8 @@ namespace Library.Models
     {
         [Key]
         public int IdRent {  get; set; }
-        public int Length { get; set; }// срок аренды
+        public DateTime DateStart { get; set; }// срок аренды
+        public DateTime DateEnd { get; set; }// срок возврата
 
         [Required]
         [ForeignKey("reader")]

@@ -7,7 +7,7 @@ namespace Library.Models
         [Key]
         public int IdReader { get; set; }
         public string Name { get; set; }
-        public string Year { get; set; }
+        public string Age { get; set; }
         public string PhoneNumber { get; set; }
         
     }
