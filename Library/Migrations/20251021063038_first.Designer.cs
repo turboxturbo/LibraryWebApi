@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Migrations
 {
     [DbContext(typeof(ContextDb))]
-    [Migration("20251020141813_first")]
+    [Migration("20251021063038_first")]
     partial class first
     {
         /// <inheritdoc />
@@ -95,6 +95,9 @@ namespace Library.Migrations
 
                     b.Property<int>("IdReader")
                         .HasColumnType("int");
+
+                    b.Property<bool>("ReturnBook")
+                        .HasColumnType("bit");
 
                     b.HasKey("IdRent");
 

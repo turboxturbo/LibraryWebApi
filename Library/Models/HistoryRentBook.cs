@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 
 namespace Library.Models
 {
@@ -9,6 +10,7 @@ namespace Library.Models
         public int IdRent {  get; set; }
         public DateTime DateStart { get; set; }// срок аренды
         public DateTime DateEnd { get; set; }// срок возврата
+        public bool ReturnBook { get; set; } //вернул книгу
 
         [Required]
         [ForeignKey("reader")]

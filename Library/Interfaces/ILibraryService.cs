@@ -22,7 +22,7 @@ namespace Library.Interfaces
         Task<IActionResult> ChangeGenre(CreateGenres genre, long IdGenre);
         Task<IActionResult> DeleteGenre(long IdGenre);
         Task<IActionResult> CreateRent(CreateRent createRent);
-        Task<IActionResult> ChangeRent(CreateRent changeRent, long IdRent);
+        Task<IActionResult> ChangeRent(ReturnBook returnbook, long IdRent);
         Task<IActionResult> GetHistoryName(string Name);
         Task<IActionResult> GetHistoryNameBook(string NameBook);
         Task<IActionResult> GetCurrentHistory();

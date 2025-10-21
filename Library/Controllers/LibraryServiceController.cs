@@ -125,9 +125,9 @@ namespace Library.Controllers
         }
         [HttpPut]
         [Route("api/rentals/return")]
-        public async Task<IActionResult> ChangeRent(CreateRent changeRent, long IdRent)
+        public async Task<IActionResult> ChangeRent(ReturnBook returnbook, long IdRent)
         {
-            return await _libraryService.ChangeRent(changeRent, IdRent);
+            return await _libraryService.ChangeRent(returnbook, IdRent);
         }
         [HttpGet]
         [Route("api/rentals/history/reader")]

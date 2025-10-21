@@ -294,17 +294,18 @@ namespace Library.Service
                 });
             }
         }
-        public async Task<IActionResult> ChangeRent(CreateRent changeRent, long IdRent) // возврат книги
+        public async Task<IActionResult> ChangeRent(ReturnBook returnbook, long IdRent) // возврат книги
         {
             var rent = await _contextDb.HistoryRentBooks.FirstOrDefaultAsync(r => r.IdRent == IdRent);
             if (rent == null)
             {
                 return new NotFoundObjectResult(new { message = $"Аренда с id: {IdRent} не найдена", status = false });
             }
-            rent.IdReader = changeRent.IdReader;
-            rent.IdBook = changeRent.IdBook;
-            rent.DateStart = changeRent.DateStart;
-            rent.DateEnd = changeRent.DateEnd;
+            if (rent.ReturnBook == true)
+            {
+                return new NotFoundObjectResult(new { message = $"Читатель уже вернул книгу", status = false });
+            }
+            rent.ReturnBook = returnbook.ReturnBookReader;
             await _contextDb.SaveChangesAsync();
             return new OkObjectResult(new { status = true });
         }

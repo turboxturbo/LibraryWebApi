@@ -93,6 +93,9 @@ namespace Library.Migrations
                     b.Property<int>("IdReader")
                         .HasColumnType("int");
 
+                    b.Property<bool>("ReturnBook")
+                        .HasColumnType("bit");
+
                     b.HasKey("IdRent");
 
                     b.HasIndex("IdBook");

@@ -70,6 +70,7 @@ namespace Library.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReturnBook = table.Column<bool>(type: "bit", nullable: false),
                     IdReader = table.Column<int>(type: "int", nullable: false),
                     IdBook = table.Column<int>(type: "int", nullable: false)
                 },
