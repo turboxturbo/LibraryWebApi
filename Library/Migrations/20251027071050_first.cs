@@ -40,6 +40,19 @@ namespace Library.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    IdRole = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameRole = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.IdRole);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
@@ -59,6 +72,27 @@ namespace Library.Migrations
                         column: x => x.IdGenre,
                         principalTable: "Genres",
                         principalColumn: "IdGenre",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    IdUser = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdRole = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.IdUser);
+                    table.ForeignKey(
+                        name: "FK_Users_Roles_IdRole",
+                        column: x => x.IdRole,
+                        principalTable: "Roles",
+                        principalColumn: "IdRole",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -91,6 +125,27 @@ namespace Library.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Logins",
+                columns: table => new
+                {
+                    Idlogin = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LoginName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdUser = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logins", x => x.Idlogin);
+                    table.ForeignKey(
+                        name: "FK_Logins_Users_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "Users",
+                        principalColumn: "IdUser",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Books_IdGenre",
                 table: "Books",
@@ -105,6 +160,16 @@ namespace Library.Migrations
                 name: "IX_HistoryRentBooks_IdReader",
                 table: "HistoryRentBooks",
                 column: "IdReader");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Logins_IdUser",
+                table: "Logins",
+                column: "IdUser");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_IdRole",
+                table: "Users",
+                column: "IdRole");
         }
 
         /// <inheritdoc />
@@ -114,13 +179,22 @@ namespace Library.Migrations
                 name: "HistoryRentBooks");
 
             migrationBuilder.DropTable(
+                name: "Logins");
+
+            migrationBuilder.DropTable(
                 name: "Books");
 
             migrationBuilder.DropTable(
                 name: "Readers");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "Genres");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
         }
     }
 }

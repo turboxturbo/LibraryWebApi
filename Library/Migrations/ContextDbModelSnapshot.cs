@@ -105,6 +105,32 @@ namespace Library.Migrations
                     b.ToTable("HistoryRentBooks");
                 });
 
+            modelBuilder.Entity("Library.Models.Login", b =>
+                {
+                    b.Property<int>("Idlogin")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Idlogin"));
+
+                    b.Property<int>("IdUser")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LoginName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Idlogin");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("Logins");
+                });
+
             modelBuilder.Entity("Library.Models.Reader", b =>
                 {
                     b.Property<int>("IdReader")
@@ -128,6 +154,49 @@ namespace Library.Migrations
                     b.HasKey("IdReader");
 
                     b.ToTable("Readers");
+                });
+
+            modelBuilder.Entity("Library.Models.Role", b =>
+                {
+                    b.Property<int>("IdRole")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdRole"));
+
+                    b.Property<string>("NameRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdRole");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Library.Models.User", b =>
+                {
+                    b.Property<int>("IdUser")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUser"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdRole")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NameUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdUser");
+
+                    b.HasIndex("IdRole");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Library.Models.Book", b =>
@@ -158,6 +227,28 @@ namespace Library.Migrations
                     b.Navigation("book");
 
                     b.Navigation("reader");
+                });
+
+            modelBuilder.Entity("Library.Models.Login", b =>
+                {
+                    b.HasOne("Library.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("Library.Models.User", b =>
+                {
+                    b.HasOne("Library.Models.Role", "role")
+                        .WithMany()
+                        .HasForeignKey("IdRole")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("role");
                 });
 #pragma warning restore 612, 618
         }

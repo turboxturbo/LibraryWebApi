@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ContextDb>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TestDbString")), ServiceLifetime.Scoped);
 
 builder.Services.AddScoped<ILibraryService, LibraryService>();
+builder.Services.AddScoped<IAuthService, AuthSevice>();
 
 var app = builder.Build();
 

@@ -13,6 +13,9 @@ namespace Library.DataBaseContext
         public DbSet<Reader> Readers { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<HistoryRentBook> HistoryRentBooks { get; set; } = null!;
+        public DbSet<Login> Logins { get; set; } = null!;
+        public DbSet<User> Users { get; set; } 
+        public DbSet<Role> Roles { get; set; }
 
     }
 }
