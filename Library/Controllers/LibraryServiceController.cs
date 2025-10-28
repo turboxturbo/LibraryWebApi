@@ -1,4 +1,5 @@
 ﻿using System.Threading.Channels;
+using Library.CustomAtributes;
 using Library.Interfaces;
 using Library.Models;
 using Library.Requests;
@@ -146,6 +147,26 @@ namespace Library.Controllers
         public async Task<IActionResult> GetCurrentHistory()
         {
             return await _libraryService.GetCurrentHistory();
+        }
+
+        [HttpPost]
+        [Route("authuser")]
+        public async Task<IActionResult> AuthUser([FromBody] AuthUser newUser)
+        {
+            return await _libraryService.AuthUser(newUser);
+        }
+        [HttpPost]
+        [Route("createNewLogin")]
+        [RoleAuthAtribute([1, 2])]
+        public async Task<IActionResult> CreateNewUserAndLoginAsync([FromBody]CreateUser user)
+        {
+            return await _libraryService.CreateNewUserAndLoginAsync(user);
+        }
+        [HttpGet]
+        [Route("getallusers")]
+        public async Task<IActionResult> GetAllUserAsync()
+        {
+            return await _libraryService.GetAllUserAsync();
         }
     }
 }

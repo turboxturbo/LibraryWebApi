@@ -146,6 +146,27 @@ namespace Library.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Sessions",
+                columns: table => new
+                {
+                    Idsession = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdUser = table.Column<int>(type: "int", nullable: false),
+                    UserIdUser = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sessions", x => x.Idsession);
+                    table.ForeignKey(
+                        name: "FK_Sessions_Users_UserIdUser",
+                        column: x => x.UserIdUser,
+                        principalTable: "Users",
+                        principalColumn: "IdUser",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Books_IdGenre",
                 table: "Books",
@@ -167,6 +188,11 @@ namespace Library.Migrations
                 column: "IdUser");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Sessions_UserIdUser",
+                table: "Sessions",
+                column: "UserIdUser");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_IdRole",
                 table: "Users",
                 column: "IdRole");
@@ -180,6 +206,9 @@ namespace Library.Migrations
 
             migrationBuilder.DropTable(
                 name: "Logins");
+
+            migrationBuilder.DropTable(
+                name: "Sessions");
 
             migrationBuilder.DropTable(
                 name: "Books");

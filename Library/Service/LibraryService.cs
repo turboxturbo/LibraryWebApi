@@ -2,6 +2,7 @@
 using Library.Interfaces;
 using Library.Models;
 using Library.Requests;
+using Library.UniversalMethods;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +12,11 @@ namespace Library.Service
     public class LibraryService : ILibraryService
     {
         private readonly ContextDb _contextDb;
-        public LibraryService(ContextDb context)
+        private readonly JWTGenerator _jwtGenerator;
+        public LibraryService(ContextDb context, JWTGenerator jwtgenerator)
         {
             _contextDb = context;
+            _jwtGenerator = jwtgenerator;
         }
         public async Task<IActionResult> GetBooksAsync()
         {
@@ -358,6 +361,51 @@ namespace Library.Service
             {
                 data = new { histtory = histtory },
                 status = true,
+            });
+        }
+
+        public async Task<IActionResult> AuthUser(AuthUser logindata)
+        {
+            var user = await _contextDb.Logins.Include(l => l.user).FirstOrDefaultAsync(l => l.Password == logindata.Password && l.LoginName == logindata.Login);
+            if (user == null)
+            {
+                return new NotFoundObjectResult(new { status = false, message = "Login not found" });
+            }
+
+            string token = _jwtGenerator.GenerateToken(new LoginPassword()
+            {
+                IdRole = user.user.IdRole,
+                IdUser = user.IdUser
+            });
+            _contextDb.Sessions.Add(new Session { Token = token, IdUser = user.IdUser });
+            _contextDb.SaveChanges();
+            return new OkObjectResult(new {token,  status = true});
+        }
+        public async Task<IActionResult> CreateNewUserAndLoginAsync(CreateUser user)
+        {
+            var login = new Login()
+            {
+                user = new User()
+                {
+                    Description = user.Description,
+                    NameUser = user.NameUser,
+                    IdRole = 2
+                },
+                Password = user.Password,
+                LoginName = user.Login
+            };
+            await _contextDb.AddAsync(login);
+            await _contextDb.SaveChangesAsync();
+            return new OkObjectResult(login);
+        }
+        public async Task<IActionResult> GetAllUserAsync()
+        {
+            var users = _contextDb.Users.ToListAsync();
+
+            return new OkObjectResult(new
+            {
+                data = new { users = users },
+                status = true
             });
         }
     }

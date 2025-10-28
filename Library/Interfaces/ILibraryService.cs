@@ -26,5 +26,8 @@ namespace Library.Interfaces
         Task<IActionResult> GetHistoryName(string Name);
         Task<IActionResult> GetHistoryNameBook(string NameBook);
         Task<IActionResult> GetCurrentHistory();
+        Task<IActionResult> AuthUser(AuthUser newUser);
+        Task<IActionResult> CreateNewUserAndLoginAsync(CreateUser user);
+        Task<IActionResult> GetAllUserAsync();
     }
 }

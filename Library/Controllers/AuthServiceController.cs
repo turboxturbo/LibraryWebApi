@@ -3,18 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Controllers
 {
-    public class AuthServiceController
+    [ApiController]
+    [Route("/[controller]")]
+    public class AuthServiceController : ControllerBase
     {
         public readonly IAuthService _authService;
         public AuthServiceController(IAuthService authService)
         {
             _authService = authService;
         }
-        [HttpGet]
-        [Route("login")]
+        [HttpGet("login")]
         public async Task<IActionResult> Login(string login, string password)
         {
             return await _authService.Login(login, password);
         }
     }
-}
+} 

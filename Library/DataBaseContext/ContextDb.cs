@@ -16,6 +16,7 @@ namespace Library.DataBaseContext
         public DbSet<Login> Logins { get; set; } = null!;
         public DbSet<User> Users { get; set; } 
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Session> Sessions { get; set; }
 
     }
 }

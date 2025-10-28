@@ -1,6 +1,7 @@
 using Library.DataBaseContext;
 using Library.Interfaces;
 using Library.Service;
+using Library.UniversalMethods;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<ContextDb>(options =>
 
 builder.Services.AddScoped<ILibraryService, LibraryService>();
 builder.Services.AddScoped<IAuthService, AuthSevice>();
+builder.Services.AddSingleton<JWTGenerator>();
 
 var app = builder.Build();
 

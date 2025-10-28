@@ -173,6 +173,31 @@ namespace Library.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("Library.Models.Session", b =>
+                {
+                    b.Property<int>("Idsession")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Idsession"));
+
+                    b.Property<int>("IdUser")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserIdUser")
+                        .HasColumnType("int");
+
+                    b.HasKey("Idsession");
+
+                    b.HasIndex("UserIdUser");
+
+                    b.ToTable("Sessions");
+                });
+
             modelBuilder.Entity("Library.Models.User", b =>
                 {
                     b.Property<int>("IdUser")
@@ -238,6 +263,17 @@ namespace Library.Migrations
                         .IsRequired();
 
                     b.Navigation("user");
+                });
+
+            modelBuilder.Entity("Library.Models.Session", b =>
+                {
+                    b.HasOne("Library.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserIdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Library.Models.User", b =>

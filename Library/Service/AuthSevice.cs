@@ -2,6 +2,7 @@
 using Library.DataBaseContext;
 using Library.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Library.Service
@@ -31,6 +32,10 @@ namespace Library.Service
                 return new NotFoundObjectResult(new {status = false, message = "Такой логин не найден или неправильно введены данные" });
             }
             islogin = true;
+            //var jwt = new JsonWebToken(
+            //  issuer: AuthSevice.ISSUER,
+            //  audience: AuthSevice.AUDIENCE,
+            //    )
             return new OkObjectResult(new {message = $"Вы успешно вошли в систему, добро пожаловать, {login}", status = true});
         }
     }
